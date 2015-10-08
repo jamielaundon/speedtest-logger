@@ -1,0 +1,102 @@
+﻿@model IEnumerable<speedtest_common.Objects.Result>
+
+@{
+    ViewBag.Title = "Speed Test Results";
+}
+
+<h2>Broadband Speed</h2>
+
+<div id="chart_div"></div>
+
+<table class="table">
+    <tr>
+        <th>
+            Time
+        </th>
+        <th>
+            Download Speed (kbps)
+        </th>
+        <th>
+            Upload Speed (kbps)
+        </th>
+        <th>
+            Ping Time (ms)
+        </th>
+        <th>
+            Speedtest Server ID
+        </th>
+        
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.logTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.download)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.upload)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ping)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serverid)
+        </td>
+    </tr>
+}
+
+</table>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+        google.load('visualization', '1', { packages: ['corechart', 'line'] });
+        google.setOnLoadCallback(drawLineColors);
+
+        function drawLineColors() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'Time');
+            data.addColumn('number', 'Speed Down (MBps)');
+            data.addColumn('number', 'Up');
+            data.addColumn('number', 'Ping Time (ms)');
+
+
+            data.addRows([
+                @ChartBuilder.chartString(Model)
+            ]);
+
+            //data.removeColumn(3);
+            var options = {
+                chart: {
+                    //title: 'Broadband Speed'
+                },
+                width: 900,
+                height: 600,
+                series: {
+                    // Gives each series an axis name that matches the Y-axis below.
+
+                    0: { axis: 'Speed Down (MBps)' },
+                    1: { axis: 'Speed Up (MBps)' },
+                    2: { axis: 'Ping (ms)' }
+
+                },
+                axes: {
+                    // Adds labels to each axis; they don't have to match the axis names.
+                    y: {
+                        
+                        Down: { label: 'Down' },
+                        Up: { label: 'Up' },
+                        Ping: { label: 'Ping' }
+                    },
+                    x: { 0: { label: 'Time' } }
+
+                }
+            };
+
+            var chart = new google.charts.Line(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+
+</script>

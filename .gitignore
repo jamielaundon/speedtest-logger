@@ -194,3 +194,8 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+Web.Debug.Config
+Web.Release.Config
+Web.Config
+settings.settings
+settings.designer.cs
