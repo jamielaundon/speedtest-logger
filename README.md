@@ -3,9 +3,9 @@ A web app to log the results from [speedtest-cli](https://github.com/sivel/speed
 
 ![Example Speedtest Graph](https://cdn.laundon.org/speedtest-example.png "Example Speedtest Graph")
 
-The excellent [speedtest.net](http://speedtest.net) is a flash-based website to test internet bandwidth.  The GitHub project [speedtest-cli](https://github.com/sivel/speedtest-cli) by [Matt Martz](https://github.com/sivel/) is a python-based commandline interface that replicates the flash-based speedtest website.  One of the options in speedtest-cli is the option **--share** which posts the test results to the speedtest.net webserver in order to generate an image that can be shared.
+The excellent [speedtest.net](http://speedtest.net) is a website to test internet bandwidth.  The GitHub project [speedtest-cli](https://github.com/sivel/speedtest-cli) by [Matt Martz](https://github.com/sivel/) is a python-based commandline interface that replicates the flash-based speedtest website.  One of the options in speedtest-cli is the option **--share** which posts the test results to the speedtest.net webserver in order to generate an image that can be shared.
 
-Minor changes to *speedtest_cli.py* can allow these results to be posted to a different location.  This project allows the capture of those speedtest results, and display them in an easy to read manner so that problems with bandwidth at different times of day can be identified.
+Minor changes to *speedtest_cli.py* can allow these results to be posted to a different location.  This project allows the capture of those speedtest results, and display them in an easy to read manner so that problems with bandwidth at different times of day can be identified. Cron or Task Scheduler can be used to schedule the script to run at regular intervals.
 
 The project is written in ASP.Net MVC, and uses [Dapper](https://github.com/StackExchange/dapper-dot-net) as a Micro ORM.  The default code assumes MS SQL as a back-end, but a single line change can use any of the database engines supported by Dapper, including MySQL.
 
