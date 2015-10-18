@@ -10,7 +10,7 @@ using speedtest_common.Objects;
 
 namespace speedtest_logger.Controllers
 {
-    public class jsonController : Controller
+    public class JsonController : Controller
     {
         // GET: json
         public string Index()

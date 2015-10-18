@@ -1,0 +1,45 @@
+﻿@model IEnumerable<speedtest_common.Objects.Result>
+
+<table class="table">
+    <tr>
+        <th>
+            Time
+        </th>
+        <th>
+            Download Speed (kbps)
+        </th>
+        <th>
+            Upload Speed (kbps)
+        </th>
+        <th>
+            Ping Time (ms)
+        </th>
+        <th>
+            Speedtest Server ID
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.logTime.ToString("dd/MM/yyyy HH:mm")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.download)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.upload)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ping)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.serverid)
+            </td>
+        </tr>
+    }
+
+</table>
