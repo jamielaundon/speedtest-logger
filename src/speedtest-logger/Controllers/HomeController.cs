@@ -14,9 +14,10 @@ namespace speedtest_logger.Controllers
         public ActionResult Index()
         {
             speedtest_common.Repositories.TestRepository repo = new speedtest_common.Repositories.TestRepository(speedtest_common.dbConfig.create(ConfigurationManager.ConnectionStrings["speedtest_logger.Properties.Settings.logConnectionString"].ConnectionString));
-            IEnumerable<speedtest_common.Objects.Result> results = repo.getAllResults();
-            
+            IEnumerable<speedtest_common.Objects.Result> results = repo.getResultsDays(7); // Get 7 days of results
             return View(results);
         }
+
+        
     }
 }

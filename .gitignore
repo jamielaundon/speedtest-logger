@@ -199,3 +199,6 @@ Web.Release.Config
 Web.Config
 settings.settings
 settings.designer.cs
+web.config
+src/speedtest-logger/web.config
+src/speedtest-logger/web.config
