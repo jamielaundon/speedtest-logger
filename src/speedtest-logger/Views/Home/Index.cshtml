@@ -138,7 +138,7 @@
             }).responseText;
 
             // Create our data table out of JSON data loaded from server.
-            var data = new google.visualization.DataTable(jsonData);
+            data = new google.visualization.DataTable(jsonData);
             view = new google.visualization.DataView(data);
             //Modify the view to hide Ping if required
             if (!showPing) {
