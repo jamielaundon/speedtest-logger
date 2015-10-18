@@ -10,7 +10,7 @@ Minor changes to *speedtest_cli.py* can allow these results to be posted to a di
 The project is written in ASP.Net MVC, and uses [Dapper](https://github.com/StackExchange/dapper-dot-net) as a Micro ORM.  The default code assumes MS SQL as a back-end, but a single line change can use any of the database engines supported by Dapper, including MySQL.
 
 ##Current Version
-The current version is an improvement to the initial release, and loads the data using ajax.  There are now controls to choose a time range, and th option to exclude ping data from that chart.
+The current version is an improvement to the initial release (single page, all results), and loads the data using ajax with controls to choose a time range, and the option to exclude ping data from that chart.
 
 ##VNext
 Version 3.0 will will tidy up the Google Chart options, and expand date ranges with date pickers.
