@@ -10,10 +10,10 @@ Minor changes to *speedtest_cli.py* can allow these results to be posted to a di
 The project is written in ASP.Net MVC, and uses [Dapper](https://github.com/StackExchange/dapper-dot-net) as a Micro ORM.  The default code assumes MS SQL as a back-end, but a single line change can use any of the database engines supported by Dapper, including MySQL.
 
 ##Current Version
-The current version is only an initial release and we return all results.
+The current version is an improvement to the initial release, and loads the data using ajax.  There are now controls to choose a time range, and th option to exclude ping data from that chart.
 
 ##VNext
-Version 2.0 will include a larger range of select statements to choose from a particular time range, and will tidy up the Google Chart options.
+Version 3.0 will will tidy up the Google Chart options, and expand date ranges with date pickers.
 
 ##Changes to speedtest_cli.py
 
@@ -52,3 +52,21 @@ request = build_request('~~://www.speedtest.net/api/api.php~~ **http://server/sp
 
 ##Structure
 The project is in two parts: [speedtest-logger](https://github.com/jamielaundon/speedtest-logger/tree/master/src/speedtest-logger) which is the MVC web page and API, and [speedtest-common](https://github.com/jamielaundon/speedtest-logger/tree/master/src/speedtest-common) which is the database logic.
+
+* / - Main web page. Loads data using ajax (see below).
+* /log - URL where the speedtest-cli data is posted to
+* /json - Google Chart datatable json
+  * /json/days/x - get data for x days
+  * /json/hours/x - get data for x hours
+  * /json/range/x/y - get data between range of two dates x and y
+  * /json/all - get all data
+* /table - html table partial view
+  * /table/days/x - get data for x days
+  * /table/hours/x - get data for x hours
+  * /table/range/x/y - get data between range of two dates x and y
+  * /table/all - get all data 
+
+##Example
+[https://jamie.laundon.org/speedtest-logger/](https://jamie.laundon.org/speedtest-logger/)
+
+
