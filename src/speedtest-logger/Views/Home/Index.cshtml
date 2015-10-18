@@ -14,7 +14,7 @@
     function drawChart() {
         
         var jsonData = $.ajax({
-            url: "/speedtest-logger/json/days/5",
+            url: "/speedtest-logger/json/days/7",
             dataType: "json",
             async: false
         }).responseText;
@@ -87,7 +87,7 @@
         chart.draw(data, google.charts.Line.convertOptions(options));
 
         //Now load the tabulated data
-        loadTableData("/speedtest-logger/table/days/5");
+        loadTableData("/speedtest-logger/table/days/7");
               
         // Handle click of Show Ping Checkbox:
         var showPing = true;
@@ -105,29 +105,28 @@
 
         $("#duration").change(function () {
             var select = $("#duration option:selected").val();
-            var dataURL = "/speedtest-logger/json/days/5";
-          
+            var dataURL = "/speedtest-logger/json/days/7";
             switch (select) {
-                case "6Hours":
+                case "6hours":
                     dataURL = "/speedtest-logger/json/hours/6";
                     break;
-                case "12Hours":
-                    dataURL = "/speedtest-logger/json/hours/6";
+                case "12hours":
+                    dataURL = "/speedtest-logger/json/hours/12";
                     break;
-                case "Today":
+                case "today":
                     dataURL = "/speedtest-logger/json/days/1";
                     break;
-                case "7Days":
+                case "7days":
                     dataURL = "/speedtest-logger/json/days/7";
                     break;
-                case "14Days":
+                case "14days":
                     dataURL = "/speedtest-logger/json/days/14";
                     break;
-                case "28Days":
+                case "28days":
                     dataURL = "/speedtest-logger/json/days/28";
                     break;
                 default:
-                    dataURL = "/speedtest-logger/json/days/5";
+                    dataURL = "/speedtest-logger/json/days/7";
                     break;
             }
             //end switch
