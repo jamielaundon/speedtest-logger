@@ -12,11 +12,17 @@ namespace speedtest_logger
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            
+            //Suitable routes:
+            //Home/Index
+            //Home/Index/hours/int
+            //Home/Index/days/int
+            //Home/Index/range/dateTime/dateTime
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                url: "{controller}/{action}/{filterType}/{rangeFrom}/{rangeTo}",
+                defaults: new { controller = "Home", action = "Index", filterType = UrlParameter.Optional, rangeFrom = UrlParameter.Optional, rangeTo = UrlParameter.Optional }
             );
         }
     }
