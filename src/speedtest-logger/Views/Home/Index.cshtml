@@ -1,79 +1,33 @@
-﻿@model IEnumerable<speedtest_common.Objects.Result>
-
-@{
+﻿@{
     ViewBag.Title = "Speed Test Results";
 }
 <br />
 <div id="chart_div"></div>
 <br />
 <h2>Tabulated Data</h2>
-<table class="table">
-    <tr>
-        <th>
-            Time
-        </th>
-        <th>
-            Download Speed (kbps)
-        </th>
-        <th>
-            Upload Speed (kbps)
-        </th>
-        <th>
-            Ping Time (ms)
-        </th>
-        <th>
-            Speedtest Server ID
-        </th>
-
-
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @item.logTime.ToString("dd/MM/yyyy HH:mm")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.download)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.upload)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ping)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.serverid)
-            </td>
-        </tr>
-    }
-
-</table>
+<div id="table_div"></div>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
     google.load('visualization', '1', { packages: ['corechart', 'line'] });
-    google.setOnLoadCallback(drawLineColors);
+    google.setOnLoadCallback(drawChart);
 
-    function drawLineColors() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('datetime', 'Time');
-        data.addColumn('number', 'Speed Down (MBps)');
-        data.addColumn('number', 'Speed Up (MBps)');
-        data.addColumn('number', 'Ping Time (ms)');
+    function drawChart() {
+        
+        var jsonData = $.ajax({
+            url: "/speedtest-logger/json/days/7",
+            dataType: "json",
+            async: false
+        }).responseText;
 
+        // Create our data table out of JSON data loaded from server.
+        var data = new google.visualization.DataTable(jsonData);
 
-        data.addRows([
-            @ChartBuilder.chartString(Model)
-        ]);
-        //console.log(JSON.parse(JSON.stringify(data)));
-        //data.removeColumn(3);
         var options = {
             chart: {
                 //title: 'Broadband Speed'
             },
 
-            width: 900,
+            width: 1024,
             height: 600,
             hAxis: { showTextEvery: 5 },
             vAxes: {
@@ -131,6 +85,81 @@
 
         var chart = new google.charts.Line(document.getElementById('chart_div'));
         chart.draw(data, google.charts.Line.convertOptions(options));
+
+        //Now load the tabulated data
+        loadTableData("/speedtest-logger/table/days/7");
+              
+        // Handle click of Show Ping Checkbox:
+        var showPing = true;
+        $("#pingSelect").click(function () {
+            view = new google.visualization.DataView(data);
+            showPing = !showPing
+            if (!showPing) {
+                view.hideColumns([3]);
+            }
+            chart.draw(view, google.charts.Line.convertOptions(options));
+            
+        });
+
+        //Handle change of dropdown
+
+        $("#duration").change(function () {
+            var select = $("#duration option:selected").val();
+            var dataURL = "/speedtest-logger/json/days/7";
+            switch (select) {
+                case "6hours":
+                    dataURL = "/speedtest-logger/json/hours/6";
+                    break;
+                case "12hours":
+                    dataURL = "/speedtest-logger/json/hours/12";
+                    break;
+                case "today":
+                    dataURL = "/speedtest-logger/json/days/1";
+                    break;
+                case "7days":
+                    dataURL = "/speedtest-logger/json/days/7";
+                    break;
+                case "14days":
+                    dataURL = "/speedtest-logger/json/days/14";
+                    break;
+                case "28days":
+                    dataURL = "/speedtest-logger/json/days/28";
+                    break;
+                default:
+                    dataURL = "/speedtest-logger/json/days/7";
+                    break;
+            }
+            //end switch
+            //grab new data
+            var jsonData = $.ajax({
+                url: dataURL,
+                dataType: "json",
+                async: false
+            }).responseText;
+
+            // Create our data table out of JSON data loaded from server.
+            data = new google.visualization.DataTable(jsonData);
+            view = new google.visualization.DataView(data);
+            //Modify the view to hide Ping if required
+            if (!showPing) {
+                view.hideColumns([3]);
+            }
+            //Draw
+            chart.draw(view, google.charts.Line.convertOptions(options));
+            //Load the table
+            loadTableData(dataURL.replace("json", "table"));
+        });
+
     }
 
+    function loadTableData(url) {
+        $.ajax({
+            type: "GET",
+            dataType: "html",
+            url: url,
+            success: function (d) {
+                $('#table_div').html(d);
+            }
+        });
+    }
 </script>
