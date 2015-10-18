@@ -21,8 +21,8 @@ namespace speedtest_logger
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{filterType}/{rangeFrom}/{rangeTo}",
-                defaults: new { controller = "Home", action = "Index", filterType = UrlParameter.Optional, rangeFrom = UrlParameter.Optional, rangeTo = UrlParameter.Optional }
+                url: "{controller}/{action}/{rangeFrom}/{rangeTo}",
+                defaults: new { controller = "Home", action = "Index", rangeFrom = UrlParameter.Optional, rangeTo = UrlParameter.Optional }
             );
         }
     }
