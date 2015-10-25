@@ -7,9 +7,18 @@
 <h2>Tabulated Data</h2>
 <div id="table_div"></div>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+
+<script type="text/javascript" 
+        src="https://www.gstatic.com/charts/loader.js">//To Fix bug in Charts v 42</script>
+
 <script type="text/javascript">
-    google.load('visualization', '1', { packages: ['corechart', 'line'] });
-    google.setOnLoadCallback(drawChart);
+    //google.load('visualization', '1', { packages: ['corechart', 'line'] });
+    //google.setOnLoadCallback(drawChart);
+	
+	//To fix bug in Charts v 42
+	google.charts.load('41', {packages: ['corechart', 'line']});
+    	google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
         
